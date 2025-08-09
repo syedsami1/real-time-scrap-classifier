@@ -2,7 +2,7 @@
 
 Lightweight, end-to-end computer vision mini-project for automated scrap material sorting, built with **YOLOv8**, **OpenCV**, and a subset of **TrashNet** dataset, optimized for running in Google Colab (CPU).
 
----
+***
 
 ## 📌 Overview
 
@@ -10,7 +10,7 @@ This project simulates an **AI-powered sorting system** for recyclable materials
 
 It is **not a production-grade system**, but a **mini proof-of-concept** that covers all stages of a vision pipeline — dataset preparation, model training, inference, and visualization — while staying lightweight enough for students and quick demos.
 
----
+***
 
 ## 🎯 Objectives
 
@@ -21,7 +21,34 @@ It is **not a production-grade system**, but a **mini proof-of-concept** that co
 - **Latency Logging**: Measure and display inference speed
 - **Lightweight Design**: Runs on CPU with <100 images for fast demonstrations
 
----
+***
+
+## 🏃♂️ How to Run
+
+1. **Setup Environment**  
+   Use Google Colab or any Python 3 environment (CPU recommended). Install dependencies with:  
+   ```bash
+   pip install ultralytics opencv-python-headless datasets pyyaml
+   ```
+
+2. **Prepare Dataset**  
+   The project uses a small subset of TrashNet, which can be streamed and sampled automatically via provided scripts. This saves images and generates YOLO-format label files with full-image bounding boxes.
+
+3. **Train the Model**  
+   Fine-tune YOLOv8 Nano on the prepared dataset by running:  
+   ```python
+   from ultralytics import YOLO
+   model = YOLO('yolov8n.pt')
+   model.train(data='trashnet_yolo.yaml', epochs=15, imgsz=320, batch=4, augment=True)
+   ```
+
+4. **Run Real-Time Simulation**  
+   Run the OpenCV-based conveyor simulation that loops over sample images, performing detection and overlaying bounding boxes, pick-point crosshairs, and displaying inference latency per frame.
+
+5. **View Outputs**  
+   Detection results appear sequentially showing scrap classifications and pick coordination as a proof of concept.
+
+***
 
 ## 🏗 System Workflow
 
@@ -45,7 +72,7 @@ Input Images → YOLOv8 Detection → Bounding Boxes → Pick Point Calculation 
   640x640px    Confidence Scores    Center Coords    Crosshair Overlay   Frame Display
 ```
 
----
+***
 
 ## 🛠 Technology Stack
 
@@ -57,7 +84,7 @@ Input Images → YOLOv8 Detection → Bounding Boxes → Pick Point Calculation 
 | **Training** | Ultralytics | Model training and inference |
 | **Platform** | Google Colab | CPU-optimized environment |
 
----
+***
 
 ## 🔍 Implementation Details
 
@@ -76,7 +103,7 @@ Input Images → YOLOv8 Detection → Bounding Boxes → Pick Point Calculation 
 - **Processing Pipeline**: Detection → Classification → Pick Point → OpenCV Display
 - **Performance Monitoring**: Real-time latency measurement printed to console
 
----
+***
 
 ## 📊 Performance Results
 
@@ -96,7 +123,7 @@ Input Images → YOLOv8 Detection → Bounding Boxes → Pick Point Calculation 
 - **Memory Usage**: ~150MB during inference
 - **Platform**: Google Colab CPU environment
 
----
+***
 
 ## ⚠️ Challenges & Learnings
 
@@ -112,12 +139,10 @@ Input Images → YOLOv8 Detection → Bounding Boxes → Pick Point Calculation 
 - Real-time processing requires careful balance of accuracy and speed
 - Proof-of-concept demonstrations need clear scope and limitation documentation
 
----
+***
 
 ## 🚀 Future Enhancements
 
 - Use precise bounding box annotations for improved localization accuracy
 - Deploy on edge hardware (Jetson Nano, Coral TPU) for better performance
 - Add object tracking to smooth detection consistency across frames
-
----
